@@ -1,0 +1,42 @@
+[user]
+    name = akisame338
+    email = akisame338@gmail.com
+
+[alias]
+    s = status
+    d = diff
+    dw = diff --word-diff
+    # 空白とカンマを区切り文字として単語単位での差分を表示
+    # see: http://nirasan.hatenablog.com/entry/2012/11/20/174338
+    diff-csv = diff --word-diff-regex="[^[:blank:],]"
+    dc = diff --cached
+    ds = diff --stat
+    dcw = diff --cached --word-diff
+    dcs = diff --cached --stat
+    dsc = diff --stat --cached
+    co = checkout
+    cb = checkout -b
+    l = log
+    ll = log --oneline --graph --decorate
+    sl = stash list
+    fa = fetch --all
+    cp = cherry-pick
+    cpn = cherry-pick -n
+    # エイリアスで引数を使う
+    # see: https://rcmdnk.com/blog/2013/12/20/computer-git/
+    dh = "!sh -c 'git diff HEAD~$1' -"
+    ri = "!sh -c 'git rebase -i HEAD~$1' -"
+    ss = "!sh -c 'git stash save $1' -"
+    sp = "!sh -c 'git stash pop stash@{$1}' -"
+    initialize = "!sh -c 'git init && git commit --allow-empty -m \"Initial commit\"'"
+
+[core]
+    whitespace = cr-at-eol
+    editor = vim
+    # 日本語の文字化け対策
+    # see: https://maku77.github.io/git/settings/garbling.html
+    pager = "LESSCHARSET=utf-8 less"
+    quotepath = false
+
+[init]
+    defaultBranch = main
