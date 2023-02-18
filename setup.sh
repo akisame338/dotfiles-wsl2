@@ -6,21 +6,48 @@ function execute() {
   eval ${cmd}
 }
 
+function make_backup_or_delete() {
+  target=${1}
+
+  if [ -f ${target} ]; then
+    bakup_file="${target}.BAK"
+    echo "File \`${target}\` already exists, make a backup copy \`${bakup_file}\` and remove."
+    execute "cp ${target} ${bakup_file}"
+    execute "rm ${target}"
+  elif [ -L ${target} ]; then
+    echo "Symbolic link \`${target}\` exists, remove it."
+    execute "rm ${target}"
+  fi
+}
+
+function create_symbolic_link() {
+  src_file=${1}
+  dst_file=${2}
+
+  make_backup_or_delete ${dst_file}
+  execute "ln -s ${src_file} ${dst_file}"
+}
+
+function copy() {
+  src_file=${1}
+  dst_file=${2}
+
+  make_backup_or_delete ${dst_file}
+  execute "cp ${src_file} ${dst_file}"
+}
+
+HOST_USER_DIR=`wslpath "$(wslvar USERPROFILE)"`
+
 echo "Create symbolic links."
 
+# Home
 SRC_DIR="${PWD}/home"
 while read -d $'\0' src_file; do
   dst_file=`echo ${src_file} | sed "s@${SRC_DIR}@${HOME}@"`
-
-  if [ -f ${dst_file} ]; then
-    bakup_file="${dst_file}.BAK"
-    echo "File \`${dst_file}\` already exists, make a backup copy \`${bakup_file}\` and remove."
-    execute "cp ${dst_file} ${bakup_file}"
-    execute "rm ${dst_file}"
-  elif [ -L ${dst_file} ]; then
-    echo "Symbolic link \`${dst_file}\` exists, remove it."
-    execute "rm ${dst_file}"
-  fi
-
-  execute "ln -s ${src_file} ${dst_file}"
+  create_symbolic_link ${src_file} ${dst_file}
 done < <(find ${SRC_DIR} -mindepth 1 -maxdepth 1 -print0)
+
+echo "Copy files."
+
+# WSL config
+copy "${PWD}/wsl/.wslconfig" "${HOST_USER_DIR}/.wslconfig"
