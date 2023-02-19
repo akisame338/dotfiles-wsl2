@@ -9,13 +9,13 @@ function execute() {
 function make_backup_or_delete() {
   target=${1}
 
-  if [ -f ${target} ]; then
+  if [ -L ${target} ]; then
+    echo "Symbolic link \`${target}\` exists, remove it."
+    execute "rm ${target}"
+  elif [ -f ${target} ]; then
     bakup_file="${target}.BAK"
     echo "File \`${target}\` already exists, make a backup copy \`${bakup_file}\` and remove."
     execute "cp ${target} ${bakup_file}"
-    execute "rm ${target}"
-  elif [ -L ${target} ]; then
-    echo "Symbolic link \`${target}\` exists, remove it."
     execute "rm ${target}"
   fi
 }
