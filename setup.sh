@@ -38,7 +38,7 @@ function copy() {
 
 HOST_USER_DIR=`wslpath "$(wslvar USERPROFILE)"`
 
-echo "Create symbolic links."
+echo "Create symbolic links / Copy files"
 
 # Home
 SRC_DIR="${PWD}/home"
@@ -47,11 +47,24 @@ while read -d $'\0' src_file; do
   create_symbolic_link ${src_file} ${dst_file}
 done < <(find ${SRC_DIR} -mindepth 1 -maxdepth 1 -print0)
 
-echo "Copy files."
-
 # WSL config
 copy "${PWD}/wsl/.wslconfig" "${HOST_USER_DIR}/.wslconfig"
 
 # Windows Terminal config
 windows_terminal_dir=`find ${HOST_USER_DIR}/AppData/Local/Packages/ -type d -name 'Microsoft.WindowsTerminal_*' | head -n 1`
 copy "${PWD}/windows-terminal/settings.json" "${windows_terminal_dir}/LocalState/settings.json"
+
+# VSCode
+# user (Windows)
+vscode_user_src_dir="${PWD}/vscode/user"
+vscode_user_dst_dir="${HOST_USER_DIR}/AppData/Roaming/Code/User"
+while read -d $'\0' src_file; do
+  dst_file=`echo ${src_file} | sed "s@${vscode_user_src_dir}@${vscode_user_dst_dir}@"`
+  copy ${src_file} ${dst_file}
+done < <(find ${vscode_user_src_dir} -mindepth 1 -maxdepth 1 -print0)
+# remote (WSL2)
+vscode_remote_src_dir="${PWD}/vscode/remote"
+while read -d $'\0' src_file; do
+  dst_file=`echo ${src_file} | sed "s@${vscode_remote_src_dir}@${HOME}/.vscode-server/data/Machine@"`
+  create_symbolic_link ${src_file} ${dst_file}
+done < <(find ${vscode_remote_src_dir} -mindepth 1 -maxdepth 1 -print0)
