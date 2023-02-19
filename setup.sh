@@ -51,3 +51,7 @@ echo "Copy files."
 
 # WSL config
 copy "${PWD}/wsl/.wslconfig" "${HOST_USER_DIR}/.wslconfig"
+
+# Windows Terminal config
+windows_terminal_dir=`find ${HOST_USER_DIR}/AppData/Local/Packages/ -type d -name 'Microsoft.WindowsTerminal_*' | head -n 1`
+copy "${PWD}/windows-terminal/settings.json" "${windows_terminal_dir}/LocalState/settings.json"
