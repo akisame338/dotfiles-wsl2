@@ -1,6 +1,6 @@
 {
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Kary Pro Colors － Dark",
+    "workbench.colorTheme": "Green Abyss",
     "editor.renderWhitespace": "all",
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
@@ -9,5 +9,6 @@
     "editor.suggest.showMethods": true,
     "editor.suggest.preview": true,
     "editor.acceptSuggestionOnEnter": "on",
-    "editor.snippetSuggestions": "top"
+    "editor.snippetSuggestions": "top",
+    "terminal.integrated.allowChords": false
 }
