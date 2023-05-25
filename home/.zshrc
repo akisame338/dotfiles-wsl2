@@ -56,3 +56,9 @@ zstyle ':completion:*' recent-dirs-insert both
 zstyle ':chpwd:*' recent-dirs-max 50
 zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-pushd true
+
+# see: https://github.com/sagiegurari/cargo-make#shell-completion
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+# make sure to update the path based on your file system location
+source `find ${HOME} -name 'makers-completion.bash' | head -n 1`
