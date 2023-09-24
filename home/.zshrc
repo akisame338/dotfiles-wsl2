@@ -62,3 +62,6 @@ autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 # make sure to update the path based on your file system location
 source `find ${HOME} -name 'makers-completion.bash' | head -n 1`
+
+# (for WSL2) 指定したディレクトリをエクスプローラーで開く
+alias explorer='(){ (cd "${1}" && explorer.exe . || true) }'
