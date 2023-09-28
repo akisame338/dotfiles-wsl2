@@ -65,3 +65,5 @@ source `find ${HOME} -name 'makers-completion.bash' | head -n 1`
 
 # (for WSL2) 指定したディレクトリをエクスプローラーで開く
 alias explorer='(){ (cd "${1}" && explorer.exe . || true) }'
+
+source <(tea --shellcode)  #docs.tea.xyz/shellcode

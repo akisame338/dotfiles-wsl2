@@ -79,3 +79,5 @@ PS1="\[\033[32m\][\u@\w]\n\[\033[0m\]$ "
 
 bind '"\C-f": forward-word'
 bind '"\C-b": backward-word'
+
+eval "$(tea --shellcode)"  #docs.tea.xyz/shellcode
