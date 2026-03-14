@@ -67,3 +67,8 @@ source `find ${HOME} -name 'makers-completion.bash' | head -n 1`
 alias explorer='(){ (cd "${1}" && explorer.exe . || true) }'
 
 source <(tea --shellcode)  #docs.tea.xyz/shellcode
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
